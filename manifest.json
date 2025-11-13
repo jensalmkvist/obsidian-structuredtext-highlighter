@@ -1,11 +1,10 @@
 {
   "id": "structuredtext-highlighter",
   "name": "Structured Text Highlighter",
-  "version": "0.1.0",
-  "minAppVersion": "0.12.0",
-  "description": "Adds syntax highlighting using Prism.js",
-  "author": "Jens Thieme Almkvist",
+  "version": "0.2.0",
+  "minAppVersion": "0.15.0",
+  "description": "Adds syntax highlighting for Structured Text",
+  "author": "JTA",
   "authorUrl": "",
-  "isDesktopOnly": false,
-  "css": "styles.css"
+  "isDesktopOnly": false
 }

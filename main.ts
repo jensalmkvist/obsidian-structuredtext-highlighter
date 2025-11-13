@@ -1,36 +1,42 @@
 import { Plugin } from 'obsidian';
-import Prism from 'prismjs'
+import loadPrismWithST from 'loadPrismWithST';
+import StructuredTextHighlighter from 'structuredtextHighlighter';
+import { ViewPlugin } from '@codemirror/view';
 
-Prism.languages.structuredtext = {
-    'comment': {
-        pattern: /\(\*[\s\S]*?\*\)/,
-        greedy: true
-    },
-    'keyword': /\b(IF|THEN|ELSE|END_IF|FOR|TO|DO|END_FOR|WHILE|END_WHILE|CASE|OF|END_CASE|TYPE|END_TYPE|STRUCT|END_STRUCT|BOOL|INT|REAL)\b/,
-    'boolean': /\b(TRUE|FALSE)\b/,
-    'operator': /\b(AND|OR|NOT|XOR)\b|:=|<>|<=|>=|<|>/,
-    'number': /\b\d+(\.\d+)?\b/,
-    'punctuation': /[();,]/,
-    'identifier': /\b[A-Za-z_][A-Za-z0-9_]*\b/
-};
+console.log("StructuredText plugin file loaded");
+export default class StructuredTextSyntaxHighlighterPlugin extends Plugin {
+  obsidianPrism: any;
 
-class StructuredTextHighlighter extends Plugin {
-    async onload() {
-        console.log('Structured Text Highlighter plugin loaded');
+  async onload() {
+    console.log('Reached onload');
+    try {
+      console.log('Loading Structured Text Highlighter Plugin');
+      this.obsidianPrism = await loadPrismWithST();
+      console.log('prism loaded');
 
-        this.registerMarkdownPostProcessor((element) => {
-            element.querySelectorAll('pre code').forEach((block) => {
-                // Apply highlighting using Prism
-                Prism.highlightElement(block);
-            });
+      this.registerMarkdownPostProcessor((el, ctx) => {
+        el.querySelectorAll('pre > code.language-structuredtext').forEach((block) => {
+          this.obsidianPrism.highlightElement(block);
         });
+      });
 
-    }
+      this.registerEditorExtension(
+        ViewPlugin.fromClass(StructuredTextHighlighter, {
+          decorations: (plugin) => plugin.decorations,
+        })
+      );
 
-    onunload() {
-        console.log('Structured Text Highlighter plugin unloaded');
+      this.app.workspace.updateOptions();
+    } catch (error) {
+      console.error('Failed to load Prism: ', error);
     }
+  }
+
+  onunload() {
+    console.log('Unloading Structured Text Syntax Highlighter Plugin');
+
+    if (this.obsidianPrism && this.obsidianPrism.languages.structuredtext) {
+      delete this.obsidianPrism.languages.structuredtext;
+    }
+  }
 }
-
-module.exports = StructuredTextHighlighter;
-
