@@ -37,7 +37,7 @@ const applyPrismST = (Prism: any) => {
     ...Object.values(declarationKeywords).flat()
   ];
 
-  const keywordRegex = new RegExp(`\\b(${allKeywords.join('|')})\\b`);
+  const keywordRegex = new RegExp(`\\b(${allKeywords.join('|')})(?=$|\\s|[^\\w])`);
 
   Prism.languages.structuredtext = Prism.languages.extend('clike', {
 

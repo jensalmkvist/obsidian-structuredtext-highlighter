@@ -64,9 +64,9 @@ export default class StructuredTextHighlight implements PluginValue {
 
         const start = currentIndex;
         element.childNodes.forEach((child) => traverse(child));
-        const end = currentIndex;
+        const end = currentIndex + 1;
 
-        if (className) {
+        if (className && end > start) {
           ranges.push({ start, end, className });
         }
       }
