@@ -1,0 +1,22 @@
+/* Structured Text syntax highlighting */
+code[class*="language-structuredtext"] .token.keyword {
+  color: #d73a49;
+  font-weight: bold;
+}
+
+code[class*="language-structuredtext"] .token.operator {
+  color: #6f42c1;
+}
+
+code[class*="language-structuredtext"] .token.comment {
+  color: #6a737d;
+  font-style: italic;
+}
+
+code[class*="language-structuredtext"] .token.boolean {
+  color: #005cc5;
+}
+
+code[class*="language-structuredtext"] .token.number {
+  color: #e36209;
+}

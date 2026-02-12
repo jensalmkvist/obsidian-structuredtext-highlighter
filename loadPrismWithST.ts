@@ -17,7 +17,7 @@ const applyPrismST = (Prism: any) => {
   };
 
   const typedKeywordGroups = {
-    intKeywords: ['USINT', 'SINT', 'UINT', 'INT', 'UDINT', 'DINT', 'ULINT', 'LINTT'],
+    intKeywords: ['USINT', 'SINT', 'UINT', 'INT', 'UDINT', 'DINT', 'ULINT', 'LINT'],
     floatKeywords: ['REAL', 'LREAL'],
     boolKeywords: ['BOOL'],
     stringKeywords: ['STRING', 'WSTRING'],
@@ -37,7 +37,7 @@ const applyPrismST = (Prism: any) => {
     ...Object.values(declarationKeywords).flat()
   ];
 
-  const keywordRegex = new RegExp(`\\b(${allKeywords.join('|')})(?=$|\\s|[^\\w])`);
+  const keywordRegex = new RegExp(`\\b(${allKeywords.join('|')})(?=$|\\s|[^\\w])`, 'i');
 
   Prism.languages.structuredtext = Prism.languages.extend('clike', {
 
